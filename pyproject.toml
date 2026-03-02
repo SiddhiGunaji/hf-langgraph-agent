@@ -1,0 +1,24 @@
+[project]
+name = "hf-langgraph-agent"
+version = "0.1.0"
+description = "Agentic AI using HuggingFace Inference API + LangGraph + DuckDB + local doc search."
+requires-python = ">=3.10"
+dependencies = [
+  "langgraph>=0.2.0",
+  "duckdb>=1.0.0",
+  "requests>=2.31.0",
+  "python-dotenv>=1.0.0",
+  "rich>=13.0.0",
+  "pydantic>=2.0.0",
+]
+
+[project.scripts]
+hfagent = "app.main:run"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+exclude = ["data*","tests*"]

@@ -1,0 +1,2 @@
+[console_scripts]
+hfagent = app.main:run
