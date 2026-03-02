@@ -1,22 +1,45 @@
-# HF + LangGraph Agent 
+# OpsPilot - Tool-Using Agent (HF Router + LangGraph)
 
-A no-subscription agentic AI using:
-- HuggingFace Inference API (free tier)
-- LangGraph for tool routing
-- DuckDB for deterministic analytics
-- Local doc search over `data/docs`
+OpsPilot is a small **agentic AI** project that demonstrates how to build a **tool-using assistant** with:
+- **HuggingFace Router** (no local model install)
+- **LangGraph** for agent routing + execution
+- **DuckDB** for deterministic analytics (no hallucinated totals)
+- Local document retrieval over `data/docs`
+- JSONL trace logging for observability
 
-## Setup
+## Why this is agentic
+This project implements a simple agent loop:
 
-### 1) HuggingFace token
-Create a token in HuggingFace → Settings → Access Tokens
+**Route → Tool → Respond → Trace**
+- Routes queries to tools (docs retrieval vs SQL)
+- Executes tools deterministically
+- Uses the LLM to synthesize a final answer using tool outputs
+- Logs a trace of tool usage
+
+## Project structure
+```text
+app/
+  agent.py        # LangGraph workflow (route → tool → respond)
+  llm.py          # HF Router chat completion client
+  trace.py        # JSONL trace logging
+  tools/
+    doc_search.py # local retrieval
+    duckdb_tool.py# deterministic SQL tool
+data/
+  docs/           # architecture + design docs (used for retrieval demos)
+logs/
+  .gitkeep
+tests/
+  test_tools.py
+
+
+## Setup (Windows PowerShell)
+
+### 1) Create a HuggingFace token
+HuggingFace → Settings → Access Tokens → Fine-grained token  
+Enable: **Inference → Make calls to Inference Providers**
 
 ### 2) Create `.env`
-`.env`contains the HF token.
-
-### 3) Install + run
-```bash
-python -m venv .venv
-source .\.venv\Scripts\activate
-pip install -e .
-hfagent
+Copy:
+```powershell
+copy .env.example .env

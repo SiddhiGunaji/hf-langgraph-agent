@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 .env
 data/sample.duckdb
+logs/trace.jsonl
+*.egg-info/
